@@ -14,35 +14,32 @@
 
             @if($sidebar)
                 @foreach($sidebar as $iMenu)
-                    @if(in_array(Auth::user()->role, explode(',', $iMenu->show)))
-                        <li class="nav-item @if(in_array($iMenu->route, explode('.', $uri))) active open @endif">
-                            <a href="javascript:;" class="nav-link nav-toggle">
-                                <i class="{{ $iMenu->icon }}"></i>
-                                <span class="title">{{ $iMenu->label }}</span>
-                                @if(in_array($iMenu->route, explode('.', $uri)))
-                                    <span class="selected"></span>
-                                @endif
-                                <span class="arrow @if(in_array($iMenu->route, explode('.', $uri))) open @endif"></span>
-                            </a>
-
-                            @if(isset($iMenu->child) && $iMenu->child)
-                                <ul class="sub-menu">
-                                    @foreach($iMenu->child as $iSubMenu)
-                                        @if(in_array(Auth::user()->role, explode(',', $iSubMenu->show)))
-                                            <li class="nav-item @if($iSubMenu->route == $uri) active open @endif">
-                                                <a href="@if(Route::has($iSubMenu->route)) {{ route($iSubMenu->route) }} @endif" class="nav-link">
-                                                    <span class="title">{{ $iSubMenu->label }}</span>
-                                                    @if($iSubMenu->route == $uri)
-                                                        <span class="selected"></span>
-                                                    @endif
-                                                </a>
-                                            </li>
-                                        @endif
-                                    @endforeach
-                                </ul>
+                    <li class="nav-item @if(in_array($iMenu->route, explode('.', $uri))) active open @endif">
+                        <a href="javascript:;" class="nav-link nav-toggle">
+                            <i class="{{ $iMenu->icon }}"></i>
+                            <span class="title">{{ $iMenu->label }}</span>
+                            @if(in_array($iMenu->route, explode('.', $uri)))
+                                <span class="selected"></span>
                             @endif
-                        </li>
-                    @endif
+                            <span class="arrow @if(in_array($iMenu->route, explode('.', $uri))) open @endif"></span>
+                        </a>
+
+                        @if(isset($iMenu->child) && $iMenu->child)
+                            <ul class="sub-menu">
+                                @foreach($iMenu->child as $iSubMenu)
+                                    <li class="nav-item @if($iSubMenu->route == $uri) active open @endif">
+                                        <a href="@if(Route::has($iSubMenu->route)) {{ route($iSubMenu->route) }} @endif"
+                                           class="nav-link">
+                                            <span class="title">{{ $iSubMenu->label }}</span>
+                                            @if($iSubMenu->route == $uri)
+                                                <span class="selected"></span>
+                                            @endif
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @endif
+                    </li>
                 @endforeach
             @endif
 

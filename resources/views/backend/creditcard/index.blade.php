@@ -1,7 +1,7 @@
 @extends('backend.layouts.app')
 
 @section('title')
-    Manage Apple ID
+    Manage Credit cards
 @endsection
 
 @section('content')
@@ -15,7 +15,7 @@
                         <i class="fa fa-circle"></i>
                     </li>
                     <li>
-                        <a href="{{ route('apple.index') }}">Apple ID</a>
+                        <a href="{{ route('apple.index') }}">Credit cards</a>
                         <i class="fa fa-circle"></i>
                     </li>
                     <li>
@@ -26,7 +26,7 @@
             <!-- END PAGE BAR -->
 
             <!-- BEGIN PAGE TITLE-->
-            <h3 class="page-title"> Managed Apple ID
+            <h3 class="page-title"> Managed Credit cards
                 <small>All</small>
             </h3>
             <!-- END PAGE TITLE-->
@@ -45,11 +45,11 @@
                         </div>
                         <div class="portlet-body">
                             <table class="table table-striped table-bordered table-hover table-checkable order-column"
-                                   id="data-apple">
+                                   id="data-credit">
                                 <thead>
                                 <tr>
                                     <th> ID</th>
-                                    <th> Apple ID</th>
+                                    <th> Number</th>
                                     <th> Actions</th>
                                 </tr>
                                 </thead>
@@ -60,9 +60,9 @@
 
                                         <tr class="odd gradeX">
                                             <td> {{ $i->id }}</td>
-                                            <td>{{ $i->apple_id }}</td>
+                                            <td>{{ $i->number }}</td>
                                             <td>
-                                                <form action="{{ route('apple.destroy', $i->id) }}" method="POST">
+                                                <form action="{{ route('creditCard.destroy', $i->id) }}" method="POST">
                                                     {{ method_field('DELETE') }}
                                                     {{ csrf_field() }}
                                                     <button type="submit" class="btn red btn-sm btn-delete">Delete</button>
@@ -86,8 +86,8 @@
 
 @section('footer')
     <script>
-        $('#data-apple').on('click', '.btn-delete', function () {
-            var confirmDel = confirm('Do you want to delete this apple_id?');
+        $('#data-credit').on('click', '.btn-delete', function () {
+            var confirmDel = confirm('Do you want to delete this credit card?');
             if (confirmDel) {
                 this.parent().submit();
             } else {

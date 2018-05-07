@@ -1,7 +1,7 @@
 @extends('backend.layouts.app')
 
 @section('title')
-    Manage user
+    Insert Credit cards
 @endsection
 
 @section('content')
@@ -14,7 +14,7 @@
                         <i class="fa fa-circle"></i>
                     </li>
                     <li>
-                        <a href="{{ route('apple.index') }}">Apple Id</a>
+                        <a href="{{ route('creditCard.index') }}">Credit Card</a>
                         <i class="fa fa-circle"></i>
                     </li>
                     <li>
@@ -24,7 +24,7 @@
             </div>
             <!-- END PAGE BAR -->
 
-            <h3 class="page-title"> Apple ID
+            <h3 class="page-title"> Credit Card
                 <small>Insert</small>
             </h3>
 
@@ -35,7 +35,7 @@
                         <div class="portlet-title">
                             <div class="caption font-green-haze">
                                 <i class="icon-settings font-green-haze"></i>
-                                <span class="caption-subject bold uppercase"> Insert Apple ID</span>
+                                <span class="caption-subject bold uppercase"> Insert Credit Card</span>
                             </div>
                             <div class="actions">
                                 <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;"
@@ -46,14 +46,14 @@
 
                             @include('backend.blocks.message')
 
-                            <form action="{{ route('apple.store') }}" class="form-horizontal" role="form"
+                            <form action="{{ route('creditCard.store') }}" class="form-horizontal" role="form"
                                   method="post" enctype="multipart/form-data">
 
                                 {{ csrf_field() }}
 
                                 @include('backend.blocks.errors')
 
-                                @include('backend.apple._form')
+                                @include('backend.creditcard._form')
 
                                 <div class="form-actions">
                                     <div class="row">

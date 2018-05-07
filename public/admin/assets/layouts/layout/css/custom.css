@@ -1,0 +1,64 @@
+/* here you can put your own css to customize and override the theme */
+.page-sidebar .page-sidebar-menu>li.active.open>a, .page-sidebar .page-sidebar-menu>li.active>a, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu>li.active.open>a, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu>li.active>a {
+    background: #32c5d2;
+}
+.page-sidebar .page-sidebar-menu>li.active.open>a:hover, .page-sidebar .page-sidebar-menu>li.active>a:hover, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu>li.active.open>a:hover, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu>li.active>a:hover {
+    background: #32c5d2;
+}
+.mt-checkbox-list .mt-child {
+    margin-left: 25px !important;
+}
+.data-middle {
+    vertical-align: middle !important;
+    text-align: center;
+}
+#fileinput-inner {
+    display: inline-block;
+}
+.fileinput-preview {
+    max-width: 200px;
+    max-height: 150px;
+}
+.fileinput {
+    position: relative;
+}
+.fileinput .thumbnail {
+    width: 150px !important;
+    height: 150px !important;
+    border: 1px dotted #dfdfdf;
+}
+.fileinput .wrap-btn-image {
+    width: 65px;
+    height: 75px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+}
+.fileinput .wrap-btn-image .btn {
+    width: 65px;
+}
+.fileinput .btn-remove {
+    margin-top: 15px;
+}
+#tab_general .bootstrap-tagsinput {
+    width: 100%;
+}
+.btn-backend {
+    padding: 10px 30px;
+}
+.help-block {
+    font-size: 13px;
+}
+.btn-backend:first-of-type {
+    margin-right: 15px;
+}
+.modal-backend .modal-header {
+    padding: 10px 15px;
+}
+.modal-backend .modal-body .form-group:first-child {
+    margin-top: 15px;
+    margin-bottom: 30px;
+}

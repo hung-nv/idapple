@@ -11,7 +11,7 @@
  Target Server Version : 50718
  File Encoding         : utf-8
 
- Date: 05/08/2018 03:22:41 AM
+ Date: 05/09/2018 06:53:01 AM
 */
 
 SET NAMES utf8mb4;
@@ -25,21 +25,13 @@ CREATE TABLE `apples` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `apple_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` int(10) unsigned NOT NULL,
-  `is_used` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `apples_apple_id_unique` (`apple_id`),
   KEY `apples_user_id_foreign` (`user_id`),
   CONSTRAINT `apples_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- ----------------------------
---  Records of `apples`
--- ----------------------------
-BEGIN;
-INSERT INTO `apples` VALUES ('1', 'hoang', '1', '1', '2018-05-07 18:55:07', '2018-05-07 19:54:32'), ('2', 'ngan', '1', '1', '2018-05-07 18:55:07', '2018-05-07 19:54:40');
-COMMIT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 --  Table structure for `credit_cards`
@@ -49,21 +41,13 @@ CREATE TABLE `credit_cards` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `number` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` int(10) unsigned NOT NULL,
-  `is_used` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `apples_apple_id_unique` (`number`),
   KEY `apples_user_id_foreign` (`user_id`),
   CONSTRAINT `credit_cards_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- ----------------------------
---  Records of `credit_cards`
--- ----------------------------
-BEGIN;
-INSERT INTO `credit_cards` VALUES ('3', '42136546164', '1', '1', '2018-05-07 19:26:28', '2018-05-07 19:57:10'), ('4', '123469854313', '1', '0', '2018-05-07 19:26:28', '2018-05-07 19:26:28');
-COMMIT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 --  Table structure for `menu_system`
@@ -78,13 +62,13 @@ CREATE TABLE `menu_system` (
   `order` tinyint(4) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 --  Records of `menu_system`
 -- ----------------------------
 BEGIN;
-INSERT INTO `menu_system` VALUES ('1', 'Users', 'icon-list', 'user', '0', '0', '1'), ('2', 'Create User', '', 'user.create', '1', '1', '1'), ('3', 'All User', '', 'user.index', '1', '2', '1'), ('4', 'ID Apple', 'icon-list', 'apple', '0', '0', '1'), ('6', 'Manage All ID', '', 'apple.index', '4', '2', '1'), ('7', 'Insert AppleId Multilines', '', 'apple.insert', '4', '3', '1'), ('8', 'Credit Cards', 'icon-list', 'creditCard', '0', '0', '1'), ('9', 'All Credit cards', '', 'creditCard.index', '8', '1', '1'), ('10', 'Insert Credit Multilines', '', 'creditCard.create', '8', '2', '1'), ('11', 'ID Supports', 'icon-list', 'support', '0', '0', '1'), ('12', 'All ID Support', '', 'support.index', '11', '1', '1');
+INSERT INTO `menu_system` VALUES ('1', 'Users', 'icon-list', 'user', '0', '0', '1'), ('2', 'Create User', '', 'user.create', '1', '1', '1'), ('3', 'All User', '', 'user.index', '1', '2', '1'), ('4', 'ID Apple', 'icon-list', 'apple', '0', '0', '1'), ('6', 'Manage All ID', '', 'apple.index', '4', '2', '1'), ('7', 'Insert AppleId Multilines', '', 'apple.insert', '4', '3', '1'), ('8', 'Credit Cards', 'icon-list', 'creditCard', '0', '0', '1'), ('9', 'All Credit cards', '', 'creditCard.index', '8', '1', '1'), ('10', 'Insert Credit Multilines', '', 'creditCard.create', '8', '2', '1'), ('11', 'ID Supports', 'icon-list', 'support', '0', '0', '1'), ('12', 'All ID Support', '', 'support.index', '11', '1', '1'), ('13', 'Ports', 'icon-list', 'port', '0', '0', '1'), ('14', 'All Ports', '', 'port.index', '13', '1', '1');
 COMMIT;
 
 -- ----------------------------
@@ -117,6 +101,18 @@ CREATE TABLE `password_resets` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
+--  Table structure for `ports`
+-- ----------------------------
+DROP TABLE IF EXISTS `ports`;
+CREATE TABLE `ports` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `port` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
 --  Table structure for `supports`
 -- ----------------------------
 DROP TABLE IF EXISTS `supports`;
@@ -126,14 +122,7 @@ CREATE TABLE `supports` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- ----------------------------
---  Records of `supports`
--- ----------------------------
-BEGIN;
-INSERT INTO `supports` VALUES ('2', 'test', '2018-05-07 20:19:34', '2018-05-07 20:19:34');
-COMMIT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 --  Table structure for `users`

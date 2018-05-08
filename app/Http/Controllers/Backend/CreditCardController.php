@@ -6,15 +6,28 @@ use App\Models\CreditCard;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Response;
 
 class CreditCardController extends Controller
 {
+	public function download() {
+		$dataStorage = CreditCard::select('number')->pluck('number')->toArray();
+		$dataStorage = implode("\n", $dataStorage);
+		Storage::put('creditcards.txt', $dataStorage);
+		return Response::download(storage_path('app/creditcards.txt'));
+	}
+
+	public function deleteAll() {
+		CreditCard::truncate();
+		return redirect()->route('creditCard.index');
+	}
+
 	public function getFirstNumber() {
-		$credit = CreditCard::where('is_used', '0')->first();
+		$credit = CreditCard::first();
 		if($credit) {
-			$credit->is_used = 1;
-			$credit->save();
 			echo $credit->number;
+			$credit->delete();
 		} else {
 			echo 'Het hang';
 		}

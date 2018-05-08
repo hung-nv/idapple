@@ -8,15 +8,28 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Response;
 
 class AppleController extends Controller
 {
+	public function download() {
+		$dataStorage = Apple::select('apple_id')->pluck('apple_id')->toArray();
+		$dataStorage = implode("\n", $dataStorage);
+		Storage::put('apples.txt', $dataStorage);
+		return Response::download(storage_path('app/apples.txt'));
+	}
+
+	public function deleteAll() {
+		Apple::truncate();
+		return redirect()->route('apple.index');
+	}
+
 	public function getFirstId() {
-		$apple = Apple::where('is_used', '0')->first();
+		$apple = Apple::first();
 		if($apple) {
-			$apple->is_used = 1;
-			$apple->save();
 			echo $apple->apple_id;
+			$apple->delete();
 		} else {
 			echo 'Het hang';
 		}
@@ -41,12 +54,7 @@ class AppleController extends Controller
     }
 
     public function insert() {
-        $total = Apple::count('id');
-        $sell = Apple::where('is_used', 1)->count('id');
-        return view('backend.apple.create', [
-            'total' => $total,
-            'sell' => $sell
-        ]);
+        return view('backend.apple.create');
     }
 
 	public function store( Request $request ) {

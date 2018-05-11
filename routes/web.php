@@ -21,7 +21,9 @@ Route::get('/idsp/{email}', ['as' => 'support.insert', 'uses' => 'Backend\Suppor
 Route::get('/addport/{port}', ['as' => 'port.store', 'uses' => 'Backend\PortController@store']);
 Route::get('/deleteport/{port}', ['as' => 'port.delete', 'uses' => 'Backend\PortController@delete']);
 Route::get('/viewport', ['as' => 'port.view', 'uses' => 'Backend\PortController@view']);
-
+Route::get( '/view-serial', [ 'as' => 'seria.getid', 'uses' => 'Backend\SeriaController@getFirstId' ]);
+Route::get( '/view-id-serial', [ 'as' => 'viewSeria.getid', 'uses' => 'Backend\ViewSeriaController@getFirstId' ]);
+Route::get('/id-seria/{seria}', ['as' => 'idSeria.insert', 'uses' => 'Backend\IdSeriaController@insert' ]);
 
 Route::group( [ 'namespace' => 'Backend' ], function () {
 	Route::get( 'login', [ 'as' => 'login', 'uses' => 'LoginController@getLogin' ] );
@@ -50,4 +52,20 @@ Route::group( [ 'middleware' => 'auth', 'namespace' => 'Backend' ], function () 
 
 	Route::resource( 'port', 'PortController', [ 'only' => [ 'index', 'destroy' ] ] );
 	Route::get('port/deleteAll', ['as' => 'port.deleteAll', 'uses' => 'PortController@deleteAll']);
+
+	Route::resource( 'seria', 'SeriaController', [ 'only' => [ 'index', 'destroy' ] ] );
+	Route::get('seria/deleteAll', ['as' => 'seria.deleteAll', 'uses' => 'SeriaController@deleteAll']);
+	Route::get('seria/download', ['as' => 'seria.download', 'uses' => 'SeriaController@download']);
+	Route::get( 'seria/insertId', [ 'as' => 'seria.insert', 'uses' => 'SeriaController@insert' ] );
+	Route::post( 'seria/store', [ 'as' => 'seria.store', 'uses' => 'SeriaController@store' ] );
+
+	Route::resource( 'viewSeria', 'ViewSeriaController', [ 'only' => [ 'index', 'destroy' ] ] );
+	Route::get('viewSeria/deleteAll', ['as' => 'viewSeria.deleteAll', 'uses' => 'ViewSeriaController@deleteAll']);
+	Route::get('viewSeria/download', ['as' => 'viewSeria.download', 'uses' => 'ViewSeriaController@download']);
+	Route::get( 'viewSeria/insertId', [ 'as' => 'viewSeria.insert', 'uses' => 'ViewSeriaController@insert' ] );
+	Route::post( 'viewSeria/store', [ 'as' => 'viewSeria.store', 'uses' => 'ViewSeriaController@store' ] );
+
+	Route::resource( 'idSeria', 'IdSeriaController', [ 'only' => [ 'index', 'destroy' ] ] );
+	Route::get('idSeria/download', ['as' => 'idSeria.download', 'uses' => 'IdSeriaController@download']);
+	Route::get('idSeria/deleteAll', ['as' => 'idSeria.deleteAll', 'uses' => 'IdSeriaController@deleteAll']);
 } );

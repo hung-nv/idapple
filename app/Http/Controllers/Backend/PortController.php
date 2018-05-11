@@ -6,6 +6,7 @@ use App\Models\Port;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
 
 class PortController extends Controller
 {
@@ -87,7 +88,7 @@ class PortController extends Controller
     }
 
     public function view() {
-	    $port = Port::first();
+	    $port = Port::orderBy(DB::raw('RAND()'))->first();
 	    if($port) {
 		    echo $port->port;
 	    } else {

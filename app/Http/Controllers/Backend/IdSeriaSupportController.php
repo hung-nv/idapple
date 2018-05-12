@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Models\IdSeria;
+use App\Models\IdSeriaSupport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Response;
@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Jenssegers\Agent\Agent;
 
-class IdSeriaController extends Controller
+class IdSeriaSupportController extends Controller
 {
 	private $agent;
 
@@ -19,21 +19,21 @@ class IdSeriaController extends Controller
 	}
 
 	public function download() {
-		$dataStorage = IdSeria::select('seria')->pluck('seria')->toArray();
+		$dataStorage = IdSeriaSupport::select('seria')->pluck('seria')->toArray();
 		$dataStorage = implode("\n", $dataStorage);
-		Storage::put('idSerias.txt', $dataStorage);
-		return Response::download(storage_path('app/idSerias.txt'));
+		Storage::put('idSeriaSupport.txt', $dataStorage);
+		return Response::download(storage_path('app/idSeriaSupport.txt'));
 	}
 
 	public function deleteAll() {
-		IdSeria::truncate();
-		return redirect()->route('idSeria.index');
+		IdSeriaSupport::truncate();
+		return redirect()->route('idSeriaSupport.index');
 	}
 
 	public function insert($seria) {
 		if($this->agent->is('iPhone')) {
 			if(!empty($seria)) {
-				$idSeria = IdSeria::create(['seria' => $seria]);
+				$idSeria = IdSeriaSupport::create(['seria' => $seria]);
 				if($idSeria) {
 					echo 'Insert '.$seria.' thành công.';
 				} else {
@@ -46,20 +46,20 @@ class IdSeriaController extends Controller
 	}
 
 	public function index(Request $request) {
-		$data = IdSeria::paginate(20);
+		$data = IdSeriaSupport::paginate(20);
 
-		return view('backend.idSeria.index', [
+		return view('backend.idSeriaSupport.index', [
 			'data' => $data
 		]);
 	}
 
 	public function destroy($id) {
-		$idSeria = IdSeria::findOrFail($id);
+		$idSeria = IdSeriaSupport::findOrFail($id);
 		if ($idSeria->delete()) {
-			Session::flash('success_message', 'This seria has been delete!');
+			Session::flash('success_message', 'This id seria support has been delete!');
 		} else {
 			Session::flash('error_message', 'Fail to delete this seria');
 		}
-		return redirect()->route('idSeria.index');
+		return redirect()->route('idSeriaSupport.index');
 	}
 }

@@ -8,5 +8,5 @@ class ViewSeria extends \Eloquent
 {
 	protected $table = 'view_seria';
 
-	protected $fillable = ['seria', 'user_id'];
+	protected $fillable = ['seria'];
 }

@@ -18,7 +18,7 @@ class SidebarComposer
 
     public function compose(View $view)
     {
-        $menuSystem = DB::table('menu_system')->where('status', '=', 1)->get()->toArray();
+        $menuSystem = DB::table('menu_system')->where('status', '=', 1)->orderBy('order')->get()->toArray();
         $sidebar = setMultiMenu($menuSystem);
         $route = Route::current()->getAction();
 

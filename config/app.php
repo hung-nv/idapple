@@ -183,8 +183,10 @@ return [
 	    App\Providers\ViewComposerServiceProvider::class,
 	    Intervention\Image\ImageServiceProvider::class,
 	    // search with scout
-	    Laravel\Scout\ScoutServiceProvider::class
+	    Laravel\Scout\ScoutServiceProvider::class,
 
+	    // detech device
+		Jenssegers\Agent\AgentServiceProvider::class,
     ],
 
     /*
@@ -233,7 +235,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
+        'Agent' => Jenssegers\Agent\Facades\Agent::class,
     ],
 
 ];

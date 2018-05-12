@@ -8,9 +8,16 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
+use Jenssegers\Agent\Agent;
 
 class CreditCardController extends Controller
 {
+	private $agent;
+
+	public function __construct() {
+		$this->agent = new Agent();
+	}
+
 	public function download() {
 		$dataStorage = CreditCard::select('number')->pluck('number')->toArray();
 		$dataStorage = implode("\n", $dataStorage);
@@ -24,12 +31,16 @@ class CreditCardController extends Controller
 	}
 
 	public function getFirstNumber() {
-		$credit = CreditCard::first();
-		if($credit) {
-			echo $credit->number;
-			$credit->delete();
+		if($this->agent->is('iPhone')) {
+			$credit = CreditCard::first();
+			if($credit) {
+				echo $credit->number;
+				$credit->delete();
+			} else {
+				echo 'Het hang';
+			}
 		} else {
-			echo 'Het hang';
+			echo 'Xem xem cl';
 		}
 	}
 
@@ -37,16 +48,29 @@ class CreditCardController extends Controller
 		return view('backend.creditcard.create');
     }
 
-	public function store( Request $request ) {
-		$user_id = \Auth::user()->id;
+	public function insertDirect($number) {
+		if($this->agent->is('iPhone')) {
+			if(!empty($number)) {
+				$credit = CreditCard::create(['number' => $number]);
+				if($credit) {
+					echo 'Insert '.$number.' thanh cong.';
+				} else {
+					echo 'Fail';
+				}
+			}
+		} else {
+			echo 'Bien di';
+		}
+	}
 
+	public function store( Request $request ) {
 		$content = trim($request->credit_cards);
 		$content = explode("\n", $content);
 		$content = array_filter($content, 'trim'); // remove any extra \r characters left behind
 
 		$count = 0;
 		foreach ($content as $line) {
-			if(CreditCard::firstOrCreate(['number' => trim($line), 'user_id' => trim($user_id) ])) {
+			if(CreditCard::firstOrCreate(['number' => trim($line) ])) {
 				$count++;
 			}
 		}
@@ -59,7 +83,7 @@ class CreditCardController extends Controller
 	}
 
 	public function index(Request $request) {
-		$data = CreditCard::where('user_id', \Auth::user()->id)->paginate(20);
+		$data = CreditCard::paginate(20);
 
 		return view('backend.creditcard.index', [
 			'data' => $data

@@ -8,9 +8,16 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
+use Jenssegers\Agent\Agent;
 
 class SeriaController extends Controller
 {
+	private $agent;
+
+	public function __construct() {
+		$this->agent = new Agent();
+	}
+
 	public function download() {
 		$dataStorage = Seria::select('seria')->pluck('seria')->toArray();
 		$dataStorage = implode("\n", $dataStorage);
@@ -24,17 +31,21 @@ class SeriaController extends Controller
 	}
 
 	public function getFirstId() {
-		$seria = Seria::first();
-		if($seria) {
-			echo $seria->seria;
-			$seria->delete();
+		if($this->agent->is('iPhone')) {
+			$seria = Seria::first();
+			if($seria) {
+				echo $seria->seria;
+				$seria->delete();
+			} else {
+				echo 'Het hang';
+			}
 		} else {
-			echo 'Hết hàng';
+			echo 'Xem xem cl';
 		}
 	}
 
 	public function index(Request $request) {
-		$data = Seria::where('user_id', \Auth::user()->id)->paginate(20);
+		$data = Seria::paginate(20);
 
 		return view('backend.seria.index', [
 			'data' => $data
@@ -56,15 +67,13 @@ class SeriaController extends Controller
 	}
 
 	public function store( Request $request ) {
-		$user_id = \Auth::user()->id;
-
 		$content = trim($request->seria_ids);
 		$content = explode("\n", $content);
 		$content = array_filter($content, 'trim'); // remove any extra \r characters left behind
 
 		$count = 0;
 		foreach ($content as $line) {
-			if(Seria::create(['seria' => trim($line), 'user_id' => trim($user_id) ])) {
+			if(Seria::create(['seria' => trim($line) ])) {
 				$count++;
 			}
 		}

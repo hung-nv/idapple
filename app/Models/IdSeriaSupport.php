@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Seria extends \Eloquent
+class IdSeriaSupport extends \Eloquent
 {
-	protected $table = 'seria';
+	protected $table = 'id_seria';
 
 	protected $fillable = ['seria'];
 }

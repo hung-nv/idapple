@@ -8,9 +8,16 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Jenssegers\Agent\Agent;
 
 class SupportController extends Controller
 {
+	private $agent;
+
+	public function __construct() {
+		$this->agent = new Agent();
+	}
+
 	public function download() {
 		$dataStorage = Support::select('mail')->pluck('mail')->toArray();
 		$dataStorage = implode("\n", $dataStorage);
@@ -24,14 +31,18 @@ class SupportController extends Controller
 	}
 
     public function insert($email) {
-		if(!empty($email)) {
-			$support = Support::create(['mail' => $email]);
-			if($support) {
-				echo 'Insert '.$email.' thanh cong.';
-			} else {
-				'Fail';
-			}
-		}
+	    if($this->agent->is('iPhone')) {
+		    if(!empty($email)) {
+			    $support = Support::create(['mail' => $email]);
+			    if($support) {
+				    echo 'Insert '.$email.' thanh cong.';
+			    } else {
+				    echo 'Fail';
+			    }
+		    }
+	    } else {
+	    	echo 'Bien di';
+	    }
     }
 
 	public function index(Request $request) {

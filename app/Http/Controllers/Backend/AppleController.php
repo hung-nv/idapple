@@ -10,9 +10,16 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
+use Jenssegers\Agent\Agent;
 
 class AppleController extends Controller
 {
+	private $agent;
+
+	public function __construct() {
+		$this->agent = new Agent();
+	}
+
 	public function download() {
 		$dataStorage = Apple::select('apple_id')->pluck('apple_id')->toArray();
 		$dataStorage = implode("\n", $dataStorage);
@@ -26,17 +33,21 @@ class AppleController extends Controller
 	}
 
 	public function getFirstId() {
-		$apple = Apple::first();
-		if($apple) {
-			echo $apple->apple_id;
-			$apple->delete();
+		if($this->agent->is('iPhone')) {
+			$apple = Apple::first();
+			if($apple) {
+				echo $apple->apple_id;
+				$apple->delete();
+			} else {
+				echo 'Het hang';
+			}
 		} else {
-			echo 'Het hang';
+			echo 'Xem xem cl';
 		}
 	}
 
     public function index(Request $request) {
-        $data = Apple::where('user_id', \Auth::user()->id)->paginate(20);
+        $data = Apple::paginate(20);
 
         return view('backend.apple.index', [
            'data' => $data
@@ -53,6 +64,19 @@ class AppleController extends Controller
         return redirect()->route('apple.index');
     }
 
+    public function insertDirect($id) {
+	    if($this->agent->is('iPhone')) {
+		    $apple = Apple::create(['apple_id' => $id]);
+		    if($apple) {
+			    echo 'Insert '.$id.' thanh cong.';
+		    } else {
+			    echo 'Fail';
+		    }
+	    } else {
+	    	echo 'Bien di';
+	    }
+    }
+
     public function insert() {
         return view('backend.apple.create');
     }
@@ -66,7 +90,7 @@ class AppleController extends Controller
 
 		$count = 0;
 		foreach ($content as $line) {
-			if(Apple::firstOrCreate(['apple_id' => trim($line), 'user_id' => trim($user_id) ])) {
+			if(Apple::firstOrCreate(['apple_id' => trim($line) ])) {
 				$count++;
 			}
 		}

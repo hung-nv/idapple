@@ -1,7 +1,7 @@
 @extends('backend.layouts.app')
 
 @section('title')
-    Manage ID Seria
+    Manage ID Seria Support
 @endsection
 
 @section('content')
@@ -15,7 +15,7 @@
                         <i class="fa fa-circle"></i>
                     </li>
                     <li>
-                        <a href="{{ route('idSeria.index') }}">ID Seria</a>
+                        <a href="{{ route('idSeriaSupport.index') }}">ID Seria Support</a>
                         <i class="fa fa-circle"></i>
                     </li>
                     <li>
@@ -26,7 +26,7 @@
             <!-- END PAGE BAR -->
 
             <!-- BEGIN PAGE TITLE-->
-            <h3 class="page-title"> Managed ID Seria
+            <h3 class="page-title"> Managed ID Seria Support
                 <small>All</small>
             </h3>
             <!-- END PAGE TITLE-->
@@ -48,13 +48,13 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="btn-group">
-                                            <a class="btn sbold green" href="{{ route('idSeria.download') }}"> Download
+                                            <a class="btn sbold green" href="{{ route('idSeriaSupport.download') }}"> Download
                                                 <i class="fa fa-plus"></i>
                                             </a>
                                         </div>
                                     </div>
                                     <div class="col-md-6 pull-right text-right">
-                                        <a class="btn sbold red" href="{{ route('idSeria.deleteAll') }}" onclick="return confirm('Do you want to delete all?');"> Delete All</a>
+                                        <a class="btn sbold red" href="{{ route('idSeriaSupport.deleteAll') }}" onclick="return confirm('Do you want to delete all?');"> Delete All</a>
                                     </div>
                                 </div>
                             </div>
@@ -63,7 +63,7 @@
                                 <thead>
                                 <tr>
                                     <th> ID</th>
-                                    <th> ID Seria</th>
+                                    <th> ID Seria Support</th>
                                     <th> Actions</th>
                                 </tr>
                                 </thead>
@@ -76,7 +76,7 @@
                                             <td> {{ $i->id }}</td>
                                             <td>{{ $i->seria }}</td>
                                             <td>
-                                                <form action="{{ route('idSeria.destroy', $i->id) }}" method="POST">
+                                                <form action="{{ route('idSeriaSupport.destroy', $i->id) }}" method="POST">
                                                     {{ method_field('DELETE') }}
                                                     {{ csrf_field() }}
                                                     <button type="submit" class="btn red btn-sm btn-delete">Delete</button>

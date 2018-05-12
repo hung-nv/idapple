@@ -7,9 +7,16 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
+use Jenssegers\Agent\Agent;
 
 class PortController extends Controller
 {
+	private $agent;
+
+	public function __construct() {
+		$this->agent = new Agent();
+	}
+
 	public function index() {
 		$data = Port::paginate(20);
 
@@ -34,65 +41,77 @@ class PortController extends Controller
 	}
 
     public function store($port) {
-	    $count = 0;
-    	if(strlen(strstr($port, '&')) > 0) {
-    		$arrayPort = explode('&', $port);
-    		foreach ($arrayPort as $i) {
-    			if(is_numeric($i)) {
-				    Port::create(['port' => trim($i)]);
-			        $count++;
+	    if($this->agent->is('iPhone')) {
+		    $count = 0;
+		    if(strlen(strstr($port, '&')) > 0) {
+			    $arrayPort = explode('&', $port);
+			    foreach ($arrayPort as $i) {
+				    if(is_numeric($i)) {
+					    Port::firstOrCreate(['port' => trim($i)]);
+					    $count++;
+				    }
+			    }
+		    } else {
+			    if(is_numeric($port)) {
+				    Port::firstOrCreate(['port' => $port]);
+				    $count++;
 			    }
 		    }
-	    } else {
-    		if(is_numeric($port)) {
-			    Port::create(['port' => $port]);
-			    $count++;
-		    }
-	    }
 
-        if($count > 0) {
-            echo 'Add '.$count.' port thành công!';
+		    if($count > 0) {
+			    echo 'Add '.$count.' port thành công!';
+		    } else {
+			    echo 'Fail cmnr';
+		    }
 	    } else {
-            echo 'Fail cmnr';
+			echo 'Bien di';
 	    }
     }
 
     public function delete($port) {
-	    $count = 0;
-	    if(strlen(strstr($port, '&')) > 0) {
-		    $arrayPort = explode('&', $port);
-		    foreach ($arrayPort as $i) {
-			    if(is_numeric($i)) {
-				    $instance = Port::where('port', trim($i))->first();
+	    if($this->agent->is('iPhone')) {
+		    $count = 0;
+		    if(strlen(strstr($port, '&')) > 0) {
+			    $arrayPort = explode('&', $port);
+			    foreach ($arrayPort as $i) {
+				    if(is_numeric($i)) {
+					    $instance = Port::where('port', trim($i))->first();
+					    if($instance) {
+						    $instance->delete();
+						    $count++;
+					    }
+				    }
+			    }
+		    } else {
+			    if(is_numeric($port)) {
+				    $instance = Port::where('port', trim($port))->first();
 				    if($instance) {
 					    $instance->delete();
 					    $count++;
 				    }
 			    }
 		    }
-	    } else {
-		    if(is_numeric($port)) {
-			    $instance = Port::where('port', trim($port))->first();
-			    if($instance) {
-				    $instance->delete();
-				    $count++;
-			    }
-		    }
-	    }
 
-	    if($count > 0) {
-		    echo 'Xoá '.$count.' port thành công!';
+		    if($count > 0) {
+			    echo 'Xoá '.$count.' port thành công!';
+		    } else {
+			    echo 'Fail cmnr';
+		    }
 	    } else {
-		    echo 'Fail cmnr';
+			echo 'Bien di';
 	    }
     }
 
     public function view() {
-	    $port = Port::orderBy(DB::raw('RAND()'))->first();
-	    if($port) {
-		    echo $port->port;
+	    if($this->agent->is('iPhone')) {
+		    $port = Port::orderBy(DB::raw('RAND()'))->first();
+		    if($port) {
+			    echo $port->port;
+		    } else {
+			    echo 'Hết hàng';
+		    }
 	    } else {
-		    echo 'Hết hàng';
+	    	echo 'Xem xem cl';
 	    }
     }
 }

@@ -11,7 +11,7 @@
  Target Server Version : 50718
  File Encoding         : utf-8
 
- Date: 05/11/2018 07:38:31 AM
+ Date: 05/12/2018 11:23:45 AM
 */
 
 SET NAMES utf8mb4;
@@ -24,13 +24,30 @@ DROP TABLE IF EXISTS `apples`;
 CREATE TABLE `apples` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `apple_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_id` int(10) unsigned NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `apples_apple_id_unique` (`apple_id`),
-  KEY `apples_user_id_foreign` (`user_id`),
-  CONSTRAINT `apples_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+  UNIQUE KEY `apples_apple_id_unique` (`apple_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+--  Records of `apples`
+-- ----------------------------
+BEGIN;
+INSERT INTO `apples` VALUES ('1', 'hung@apple.com', '2018-05-12 03:55:11', '2018-05-12 03:55:11');
+COMMIT;
+
+-- ----------------------------
+--  Table structure for `credit_card_support`
+-- ----------------------------
+DROP TABLE IF EXISTS `credit_card_support`;
+CREATE TABLE `credit_card_support` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `number` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `apples_apple_id_unique` (`number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
@@ -40,13 +57,10 @@ DROP TABLE IF EXISTS `credit_cards`;
 CREATE TABLE `credit_cards` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `number` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_id` int(10) unsigned NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `apples_apple_id_unique` (`number`),
-  KEY `apples_user_id_foreign` (`user_id`),
-  CONSTRAINT `credit_cards_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+  UNIQUE KEY `apples_apple_id_unique` (`number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
@@ -59,14 +73,19 @@ CREATE TABLE `id_seria` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
---  Records of `id_seria`
+--  Table structure for `id_seria_support`
 -- ----------------------------
-BEGIN;
-INSERT INTO `id_seria` VALUES ('1', 'test', '2018-05-11 00:37:47', '2018-05-11 00:37:47');
-COMMIT;
+DROP TABLE IF EXISTS `id_seria_support`;
+CREATE TABLE `id_seria_support` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `seria` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 --  Table structure for `menu_system`
@@ -81,13 +100,13 @@ CREATE TABLE `menu_system` (
   `order` tinyint(4) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 --  Records of `menu_system`
 -- ----------------------------
 BEGIN;
-INSERT INTO `menu_system` VALUES ('1', 'Users', 'icon-list', 'user', '0', '0', '1'), ('2', 'Create User', '', 'user.create', '1', '1', '1'), ('3', 'All User', '', 'user.index', '1', '2', '1'), ('4', 'ID Apple', 'icon-list', 'apple', '0', '0', '1'), ('6', 'Manage All ID', '', 'apple.index', '4', '2', '1'), ('7', 'Insert AppleId Multilines', '', 'apple.insert', '4', '3', '1'), ('8', 'Credit Cards', 'icon-list', 'creditCard', '0', '0', '1'), ('9', 'All Credit cards', '', 'creditCard.index', '8', '1', '1'), ('10', 'Insert Credit Multilines', '', 'creditCard.create', '8', '2', '1'), ('11', 'ID Supports', 'icon-list', 'support', '0', '0', '1'), ('12', 'All ID Support', '', 'support.index', '11', '1', '1'), ('13', 'Ports', 'icon-list', 'port', '0', '0', '1'), ('14', 'All Ports', '', 'port.index', '13', '1', '1'), ('15', 'Manage Seria', 'icon-list', 'seria', '0', '0', '1'), ('16', 'All Seria', '', 'seria.index', '15', '1', '1'), ('17', 'Insert Seria Multiline', '', 'seria.insert', '15', '2', '1'), ('18', 'Manage View Seria', 'icon-list', 'viewSeria', '0', '0', '1'), ('19', 'All View Seria', '', 'viewSeria.index', '18', '1', '1'), ('20', 'Insert View Seria Multiline', '', 'viewSeria.insert', '18', '2', '1'), ('21', 'Manage ID Seria', 'icon-list', 'idSeria', '0', '0', '1'), ('22', 'All ID Seria', '', 'idSeria.index', '21', '1', '1');
+INSERT INTO `menu_system` VALUES ('1', 'Users', 'icon-list', 'user', '0', '0', '1'), ('2', 'Create User', '', 'user.create', '1', '1', '1'), ('3', 'All User', '', 'user.index', '1', '2', '1'), ('4', 'ID Apple', 'icon-list', 'apple', '0', '1', '1'), ('6', 'All ID Apple', '', 'apple.index', '4', '2', '1'), ('7', 'Insert AppleId Multilines', '', 'apple.insert', '4', '3', '1'), ('8', 'Credit Cards', 'icon-list', 'creditCard', '0', '2', '1'), ('9', 'All Credit cards', '', 'creditCard.index', '8', '1', '1'), ('10', 'Insert Credit Multilines', '', 'creditCard.create', '8', '2', '1'), ('11', 'ID Supports', 'icon-list', 'support', '0', '7', '1'), ('12', 'All ID Support', '', 'support.index', '11', '1', '1'), ('13', 'Ports', 'icon-list', 'port', '0', '5', '1'), ('14', 'All Ports', '', 'port.index', '13', '1', '1'), ('15', 'Seria', 'icon-list', 'seria', '0', '3', '1'), ('16', 'All Seria', '', 'seria.index', '15', '1', '1'), ('17', 'Insert Seria Multiline', '', 'seria.insert', '15', '2', '1'), ('18', 'ID Seria Save', 'icon-list', 'viewSeria', '0', '6', '1'), ('19', 'All ID Seria Save', '', 'viewSeria.index', '18', '1', '1'), ('20', 'Insert View Seria Multiline', '', 'viewSeria.insert', '18', '2', '1'), ('21', 'ID Seria', 'icon-list', 'idSeria', '0', '4', '1'), ('22', 'All ID Seria', '', 'idSeria.index', '21', '1', '1'), ('23', 'Credit Card Support', 'icon-list', 'creditCardSupport', '0', '8', '1'), ('24', 'All Credit Card Support', ' ', 'creditCardSupport.index', '23', '1', '1'), ('25', 'ID Seria Support', 'icon-list', 'idSeriaSupport', '0', '9', '1'), ('26', 'All ID Seria Support', ' ', 'idSeriaSupport.index', '25', '1', '1');
 COMMIT;
 
 -- ----------------------------
@@ -145,20 +164,17 @@ DROP TABLE IF EXISTS `seria`;
 CREATE TABLE `seria` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `seria` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_id` int(10) unsigned NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `apples_apple_id_unique` (`seria`),
-  KEY `apples_user_id_foreign` (`user_id`),
-  CONSTRAINT `seria_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+  UNIQUE KEY `apples_apple_id_unique` (`seria`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 --  Records of `seria`
 -- ----------------------------
 BEGIN;
-INSERT INTO `seria` VALUES ('5', 'ddd', '1', '2018-05-11 00:05:29', '2018-05-11 00:05:29'), ('6', 'eeee', '1', '2018-05-11 00:05:29', '2018-05-11 00:05:29');
+INSERT INTO `seria` VALUES ('5', 'ddd', '2018-05-11 00:05:29', '2018-05-11 00:05:29'), ('6', 'eeee', '2018-05-11 00:05:29', '2018-05-11 00:05:29');
 COMMIT;
 
 -- ----------------------------

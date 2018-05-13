@@ -8,78 +8,69 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
-use Jenssegers\Agent\Agent;
 
-class SeriaController extends Controller
-{
-	private $agent;
-
-	public function __construct() {
-		$this->agent = new Agent();
-	}
-
+class SeriaController extends Controller {
 	public function download() {
-		$dataStorage = Seria::select('seria')->pluck('seria')->toArray();
-		$dataStorage = implode("\n", $dataStorage);
-		Storage::put('serias.txt', $dataStorage);
-		return Response::download(storage_path('app/serias.txt'));
+		$dataStorage = Seria::select( 'seria' )->pluck( 'seria' )->toArray();
+		$dataStorage = implode( "\n", $dataStorage );
+		Storage::put( 'serias.txt', $dataStorage );
+
+		return Response::download( storage_path( 'app/serias.txt' ) );
 	}
 
 	public function deleteAll() {
 		Seria::truncate();
-		return redirect()->route('seria.index');
+
+		return redirect()->route( 'seria.index' );
 	}
 
 	public function getFirstId() {
-		if($this->agent->is('iPhone')) {
-			$seria = Seria::first();
-			if($seria) {
-				echo $seria->seria;
-				$seria->delete();
-			} else {
-				echo 'Het hang';
-			}
+		$seria = Seria::first();
+		if ( $seria ) {
+			echo $seria->seria;
+			$seria->delete();
 		} else {
-			echo 'Xem xem cl';
+			echo 'Het hang';
 		}
 	}
 
-	public function index(Request $request) {
-		$data = Seria::paginate(20);
+	public function index( Request $request ) {
+		$data = Seria::paginate( 20 );
 
-		return view('backend.seria.index', [
+		return view( 'backend.seria.index', [
 			'data' => $data
-		]);
+		] );
 	}
 
-	public function destroy($id) {
-		$seria = Seria::findOrFail($id);
-		if ($seria->delete()) {
-			Session::flash('success_message', 'This seria has been delete!');
+	public function destroy( $id ) {
+		$seria = Seria::findOrFail( $id );
+		if ( $seria->delete() ) {
+			Session::flash( 'success_message', 'This seria has been delete!' );
 		} else {
-			Session::flash('error_message', 'Fail to delete this seria');
+			Session::flash( 'error_message', 'Fail to delete this seria' );
 		}
-		return redirect()->route('seria.index');
+
+		return redirect()->route( 'seria.index' );
 	}
 
 	public function insert() {
-		return view('backend.seria.create');
+		return view( 'backend.seria.create' );
 	}
 
 	public function store( Request $request ) {
-		$content = trim($request->seria_ids);
-		$content = explode("\n", $content);
-		$content = array_filter($content, 'trim'); // remove any extra \r characters left behind
+		$content = trim( $request->seria_ids );
+		$content = explode( "\n", $content );
+		$content = array_filter( $content, 'trim' ); // remove any extra \r characters left behind
 
 		$count = 0;
-		foreach ($content as $line) {
-			if(Seria::create(['seria' => trim($line) ])) {
-				$count++;
+		foreach ( $content as $line ) {
+			if ( Seria::create( [ 'seria' => trim( $line ) ] ) ) {
+				$count ++;
 			}
 		}
 
-		if($count > 0) {
-			Session::flash('success_message', 'Insert your seria successful');
+		if ( $count > 0 ) {
+			Session::flash( 'success_message', 'Insert your seria successful' );
 		}
 
 		return redirect()->route( 'seria.insert' );

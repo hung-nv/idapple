@@ -8,5 +8,5 @@ class IdSeria extends \Eloquent
 {
 	protected $table = 'id_seria';
 
-	protected $fillable = ['seria'];
+	protected $fillable = ['seria', 'may'];
 }

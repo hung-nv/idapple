@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth as Auth;
 
-class CheckAdmin
+class CheckAgent
 {
     /**
      * Handle an incoming request.
@@ -14,8 +14,12 @@ class CheckAdmin
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next, $role)
+    public function handle($request, Closure $next)
     {
+	    if($_SERVER ['HTTP_USER_AGENT'] !== 'LuaSocket 3.0-rc1')
+	    {
+		    return abort(404);
+	    }
         return $next($request);
     }
 }

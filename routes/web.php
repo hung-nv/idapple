@@ -15,19 +15,22 @@ Route::get( '/', function () {
 	return view( 'backend.auth.login' );
 } );
 
-Route::get( '/id', [ 'as' => 'apple.getid', 'uses' => 'Backend\AppleController@getFirstId' ]);
-Route::get( '/add-id/{id}', [ 'as' => 'apple.insertDirect', 'uses' => 'Backend\AppleController@insertDirect' ]);
-Route::get( '/the', [ 'as' => 'creditCard.getthe', 'uses' => 'Backend\CreditCardController@getFirstNumber' ]);
-Route::get( '/add-the/{number}', [ 'as' => 'creditCard.insertDirect', 'uses' => 'Backend\CreditCardController@insertDirect' ]);
-Route::get('/idsp/{email}', ['as' => 'support.insert', 'uses' => 'Backend\SupportController@insert' ]);
+Route::group(['middleware' => 'checkagent'], function () {
+	Route::get( '/id', [ 'as' => 'apple.getid', 'uses' => 'Backend\AppleController@getFirstId' ]);
+	Route::get( '/add-id/{id}', [ 'as' => 'apple.insertDirect', 'uses' => 'Backend\AppleController@insertDirect' ]);
+	Route::get( '/the', [ 'as' => 'creditCard.getthe', 'uses' => 'Backend\CreditCardController@getFirstNumber' ]);
+	Route::get( '/add-the/{number}', [ 'as' => 'creditCard.insertDirect', 'uses' => 'Backend\CreditCardController@insertDirect' ]);
+	Route::get('/idsp/{email}', ['as' => 'support.insert', 'uses' => 'Backend\SupportController@insert' ]);
+	Route::get( '/view-serial', [ 'as' => 'seria.getid', 'uses' => 'Backend\SeriaController@getFirstId' ]);
+	Route::get( '/{may}/view-id-serial', [ 'as' => 'viewSeria.getid', 'uses' => 'Backend\ViewSeriaController@getFirstId' ]);
+	Route::get('/id-seria/{may}/{seria}', ['as' => 'idSeria.insert', 'uses' => 'Backend\IdSeriaController@insert' ]);
+	Route::get('/id-seria-support/{may}/{seria}', ['as' => 'idSeriaSupport.insert', 'uses' => 'Backend\IdSeriaSupportController@insert' ]);
+	Route::get('/credit-card-support/{number}', ['as' => 'creditCardSupport.insert', 'uses' => 'Backend\CreditCardSupportController@insert' ]);
+});
+
 Route::get('/addport/{port}', ['as' => 'port.store', 'uses' => 'Backend\PortController@store']);
 Route::get('/deleteport/{port}', ['as' => 'port.delete', 'uses' => 'Backend\PortController@delete']);
 Route::get('/viewport', ['as' => 'port.view', 'uses' => 'Backend\PortController@view']);
-Route::get( '/view-serial', [ 'as' => 'seria.getid', 'uses' => 'Backend\SeriaController@getFirstId' ]);
-Route::get( '/view-id-serial', [ 'as' => 'viewSeria.getid', 'uses' => 'Backend\ViewSeriaController@getFirstId' ]);
-Route::get('/id-seria/{seria}', ['as' => 'idSeria.insert', 'uses' => 'Backend\IdSeriaController@insert' ]);
-Route::get('/id-seria-support/{seria}', ['as' => 'idSeriaSupport.insert', 'uses' => 'Backend\IdSeriaSupportController@insert' ]);
-Route::get('/credit-card-support/{number}', ['as' => 'creditCardSupport.insert', 'uses' => 'Backend\CreditCardSupportController@insert' ]);
 
 Route::group( [ 'namespace' => 'Backend' ], function () {
 	Route::get( 'login', [ 'as' => 'login', 'uses' => 'LoginController@getLogin' ] );

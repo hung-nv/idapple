@@ -15,7 +15,7 @@ class IdSeriaController extends Controller {
 		$dataStorage = [];
 		$id_serias = IdSeria::select( 'seria', 'may' )->get();
 		foreach ( $id_serias as $item ) {
-			$dataStorage[] = $item->may . '|' . $item->seria;
+			$dataStorage[] = $item->may . ':' . $item->seria;
 		}
 		$dataStorage = implode( "\n", $dataStorage );
 		Storage::put( 'idSerias.txt', $dataStorage );

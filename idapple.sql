@@ -11,7 +11,7 @@
  Target Server Version : 50718
  File Encoding         : utf-8
 
- Date: 05/12/2018 11:23:45 AM
+ Date: 05/13/2018 17:44:35 PM
 */
 
 SET NAMES utf8mb4;
@@ -46,8 +46,7 @@ CREATE TABLE `credit_card_support` (
   `number` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `apples_apple_id_unique` (`number`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
@@ -70,10 +69,18 @@ DROP TABLE IF EXISTS `id_seria`;
 CREATE TABLE `id_seria` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `seria` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `may` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+--  Records of `id_seria`
+-- ----------------------------
+BEGIN;
+INSERT INTO `id_seria` VALUES ('1', 'aaaa', '111', '2018-05-13 16:42:38', '2018-05-13 16:42:40'), ('2', 'bbbb', '222', '2018-05-13 16:42:48', '2018-05-13 16:42:50'), ('3', 'ccc', '333', '2018-05-13 16:43:07', '2018-05-13 16:43:09');
+COMMIT;
 
 -- ----------------------------
 --  Table structure for `id_seria_support`
@@ -82,10 +89,18 @@ DROP TABLE IF EXISTS `id_seria_support`;
 CREATE TABLE `id_seria_support` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `seria` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `may` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+--  Records of `id_seria_support`
+-- ----------------------------
+BEGIN;
+INSERT INTO `id_seria_support` VALUES ('1', '1', 'a', '2018-05-13 16:46:17', '2018-05-13 16:46:19'), ('2', '2', 'b', '2018-05-13 16:46:24', '2018-05-13 16:46:26'), ('3', '3', 'c', '2018-05-13 16:46:31', '2018-05-13 16:46:32');
+COMMIT;
 
 -- ----------------------------
 --  Table structure for `menu_system`
@@ -219,20 +234,17 @@ DROP TABLE IF EXISTS `view_seria`;
 CREATE TABLE `view_seria` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `seria` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_id` int(10) unsigned NOT NULL,
+  `may` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `apples_apple_id_unique` (`seria`),
-  KEY `apples_user_id_foreign` (`user_id`),
-  CONSTRAINT `view_seria_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 --  Records of `view_seria`
 -- ----------------------------
 BEGIN;
-INSERT INTO `view_seria` VALUES ('4', 'minh', '1', '2018-05-11 00:23:08', '2018-05-11 00:23:08'), ('5', 'vy', '1', '2018-05-11 00:23:08', '2018-05-11 00:23:08');
+INSERT INTO `view_seria` VALUES ('7', 'bbbb', '222', '2018-05-13 09:54:04', '2018-05-13 09:54:04');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

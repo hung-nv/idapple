@@ -64,8 +64,8 @@ class ViewSeriaController extends Controller {
 
 		$count = 0;
 		foreach ( $content as $line ) {
-			if ( strlen( strstr( $line, '|' ) ) > 0 ) {
-				$value = explode( '|', $line );
+			if ( strlen( strstr( $line, ':' ) ) > 0 ) {
+				$value = explode( ':', $line );
 				if(count($value) > 2) {
 					continue;
 				}
